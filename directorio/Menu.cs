@@ -82,7 +82,10 @@ namespace directorio
                     Console.ReadKey();
                     break;
                 default:
-                    Console.Write("Seleccion invalida");
+
+                    Console.Write("Seleccion invalida ");
+                    Console.WriteLine("\n");
+                    RetornarMenu();
                     break;
             }
 
@@ -92,6 +95,14 @@ namespace directorio
             string opcion;
             Console.WriteLine("Presione r para retornar al menu principal");
             opcion = Console.ReadLine();
+            while(opcion != "r")
+            {
+                Console.WriteLine("Presione r para retornar al menu principal");
+                opcion = Console.ReadLine();
+                
+                
+            }
+             
             opcionesMenu(opcion);
         }
 

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace directorio
 {
-    public class Modificaciones
+    public class Modificaciones: validacionCampos_Requeridos
     {
         List<Usuarios> listUsuarios = new List<Usuarios>();
         string nombre;
         int ID;
-        int telefono;
+        long telefono;
         string Email;
         string direccion;
 
@@ -24,26 +24,35 @@ namespace directorio
 
             Console.Write("Ingrese su nombre *");
             nombre = Console.ReadLine();
-            if (nombre == "" || nombre == null)
+            while(nombre == "" || nombre == null)
             {
-                Console.WriteLine("Este campo es obligatorio intentelo de nuevo");
-                crearUsuario();
+                Console.WriteLine("Este campo es obligatorio intentelo de nuevo \n");
+
+                Console.WriteLine("\n");
+                Console.Write("Ingrese su nombre *");
+                nombre = Console.ReadLine() ;
                 Console.WriteLine("\n");
             }
 
             Console.Write("Ingrese su telefono *");
-            telefono = int.Parse(Console.ReadLine());
-            if (telefono == 0)
+            
+            long.TryParse(Console.ReadLine(), out telefono);
+            
+            while (telefono == null || telefono == 0)
             {
-                Console.WriteLine("Este campo es obligatorio intentelo de nuevo");
-                crearUsuario();
                 Console.WriteLine("\n");
-            }
+                Console.WriteLine("Digite correctamente su numero telefonico! \n");
 
-            Console.Write("Ingrese su correo electronico (Opcional)");
+                Console.Write("Ingrese su telefono *");
+                long.TryParse(Console.ReadLine(), out telefono);
+            }
+            
+
+            Console.Write("Ingrese su correo electronico (Opcional): ");
             Email = Console.ReadLine();
-            Console.Write("Ingrese su direccion (Opcional)");
+            Console.Write("Ingrese su direccion (Opcional): ");
             direccion = Console.ReadLine();
+            Console.WriteLine("\n");
             listUsuarios.Add(new Usuarios(ID, nombre, telefono, Email, direccion));
             Console.WriteLine("\n");
 
@@ -84,7 +93,9 @@ namespace directorio
         {
 
             Console.Write("ID: {0} | Nombre: {1} | Telefono: {2} | Email: {3} | Direccion: {4} ", ele.ID, ele.Nombre, ele.Telefono, ele.Email, ele.direccion);
+            Console.WriteLine("\n");
         }
+
         public void Eliminar()
         {
             string buscar;
@@ -104,6 +115,7 @@ namespace directorio
                         listUsuarios.Remove(ele);
                         Console.WriteLine("\n");
                         Console.WriteLine("Usuario eliminado");
+                        Console.WriteLine("\n");
                         break;
                     }
                     else
@@ -122,37 +134,54 @@ namespace directorio
             {
                 Console.WriteLine("No hay elementos en la lista para Modificar");
             }
-            else
+            else if (validarLista() == false)
             {
-                Usuarios usuario = new Usuarios();
+                
                 Console.WriteLine("Ingrese el usuario que desea Modificar: ");
                 buscar = Console.ReadLine();
-                
                 foreach (Usuarios ele in listUsuarios)
                 {
+                Usuarios usuario = new Usuarios();
                     if (buscar == ele.Nombre)
                     {
                         Console.Write("ID: {0} | Nombre: {1} | Telefono: {2} | Email: {3} | Direccion: {4} ", ele.ID, ele.Nombre, ele.Telefono, ele.Email, ele.direccion);
+                        Console.WriteLine("\n");
                         Console.WriteLine("------------------------------------------------");
-                        Console.Write("Ingrese el nombreque desea modificar: ");
+                        Console.Write("Ingrese el nombre que desea modificar: ");
                         usuario.Nombre = Console.ReadLine();
                         ele.Nombre = usuario.Nombre; 
                         Console.Write("Ingrese el numero telefonico que desea modificar: ");
-                        ele.Telefono = int.Parse(Console.ReadLine());
+                        long tel;
+                        long.TryParse(Console.ReadLine(), out tel);
+                        usuario.Telefono = tel;
+                        while(usuario.Telefono == 0)
+                        {
+                            Console.WriteLine("\n");
+                            Console.WriteLine("Digite un numero de telefono valido");
+                            long.TryParse(Console.ReadLine(), out tel);
+                            usuario.Telefono = tel;
+
+                        }
                         ele.Telefono = usuario.Telefono;
                         Console.Write("Ingrese el Email que desea modificar: ");
-                        ele.Email = Console.ReadLine();
+                        usuario.Email = Console.ReadLine();
                         ele.Email = usuario.Email;
                         Console.Write("Ingrese la direccion que desea modificar: ");
-                        ele.direccion = Console.ReadLine();
+                        usuario.direccion = Console.ReadLine();
                         ele.direccion = usuario.direccion;
                         Console.WriteLine("\n");
                         Console.WriteLine("Los datos han sido modificados");
 
                     }
+                    else if(buscar != ele.Nombre)
+                    {
+                        Console.WriteLine("\n");
+                        Console.WriteLine("Usuario no encontrado");
+                    }
                 }
 
             }
+            
             Console.WriteLine("\n");
         }
         public void Buscar()
@@ -186,5 +215,5 @@ namespace directorio
             
         }
     }
-
+    
 }

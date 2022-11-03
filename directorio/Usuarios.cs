@@ -10,14 +10,14 @@ namespace directorio
     {
         public int ID { get; set; }
         public string Nombre { get; set; }
-        public int Telefono { get; set; }
+        public long Telefono { get; set; }
         public string Email { get; set; }
         public string direccion { get; set; }
         public Usuarios()
         {
 
         }
-        public Usuarios(int iD, string nombre, int telefono, string email, string direccion)
+        public Usuarios(int iD, string nombre, long telefono, string email, string direccion)
         {
             ID = iD;
             Nombre = nombre;
