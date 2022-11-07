@@ -25,5 +25,6 @@ namespace directorio
             Email = email;
             this.direccion = direccion;
         }
+        
     }
 }

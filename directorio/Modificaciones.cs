@@ -147,8 +147,29 @@ namespace directorio
                         Console.Write("ID: {0} | Nombre: {1} | Telefono: {2} | Email: {3} | Direccion: {4} ", ele.ID, ele.Nombre, ele.Telefono, ele.Email, ele.direccion);
                         Console.WriteLine("\n");
                         Console.WriteLine("------------------------------------------------");
+                            
                         Console.Write("Ingrese el nombre que desea modificar: ");
+                        
                         usuario.Nombre = Console.ReadLine();
+                        string usu = usuario.Nombre;
+                        foreach(var c in usu)
+                        {
+                           
+                            
+                            while (!char.IsWhiteSpace(c) && !char.IsLetter(c)) 
+                            {
+                                
+                                
+                                cambiarNombre(usu);
+                                
+                            }
+                            
+                        }
+                        
+                        
+                        
+                        
+
                         ele.Nombre = usuario.Nombre; 
                         Console.Write("Ingrese el numero telefonico que desea modificar: ");
                         long tel;

@@ -10,17 +10,40 @@ namespace directorio
 {
     public class validacionCampos_Requeridos
     {
-       public void validarTel(long ele)
+       public  void  validarNombre (string  ele)
         {
-            Usuarios usuario = new Usuarios();
-            while(ele == 0 || ele == null)
-            {
+            
+
+            
+            
+
                 Console.WriteLine("\n");
-                Console.WriteLine("Digite el numero correctamente");
-                long.TryParse(Console.ReadLine(), out ele);
-            }
+
+                foreach (var c in ele)
+                {
+                    while (!char.IsWhiteSpace(c) && !char.IsLetter(c))
+                    {
+                        cambiarNombre(ele);
+
+                    }
+                }
+
             
         }
-        
+        public void cambiarNombre(string name)
+        {
+            
+            Console.WriteLine("Ingrese nombre nuevamente! ");
+            name = Console.ReadLine();
+            
+            validarNombre(name);
+        }
+       public void changeValidation(bool val)
+        {
+            if(val == true)
+            {
+                val = false;
+            }
+        }
     }
 }
