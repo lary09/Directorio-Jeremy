@@ -27,7 +27,7 @@ namespace directorio
             Console.Write("Ingrese su nombre *");
             nombre = Console.ReadLine();
             //validar si el campo nombre contiene numeros o espacios
-            while (!Regex.IsMatch(nombre, @"^[a-zA-Z]+$"))
+            while (!Regex.IsMatch(nombre, @"^[a-zA-Z-\s*]+$"))
             {
                 
                 Console.WriteLine("El nombre solo debe contener letras");
@@ -163,15 +163,17 @@ namespace directorio
                             
                         Console.Write("Ingrese el nombre que desea modificar: ");
                         usuario.Nombre = Console.ReadLine();
+                        string usu = usuario.Nombre;
                         //nueva mente validamos si es solo letras
-                       while(!Regex.IsMatch(usuario.Nombre, @"^[a-zA-Z]+$"))
+                        while (!Regex.IsMatch(usu, @"^[a-zA-Z-\s*]+$"))
                         {
-                            usuario = new Usuarios();
+
                             Console.WriteLine("El nombre solo debe contener letras");
-                            usuario.Nombre = Console.ReadLine();
-                             
+                            usu= Console.ReadLine();
+
                         }
-                        ele.Nombre = usuario.Nombre;
+
+                        ele.Nombre = usu;
 
 
 
