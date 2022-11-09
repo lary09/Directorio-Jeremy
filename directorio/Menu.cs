@@ -9,6 +9,7 @@ namespace directorio
     public class Menu : Modificaciones
     {
         string opcionMenu = "";
+        //llama a encabezado mientras sea diferente a 0
         public void iniciar()
         {
             do
@@ -33,6 +34,7 @@ namespace directorio
 
 
         }
+        //llama a los metodos dependiendo cual solicita el usuario segun el menu
         public void opcionesMenu(string opciones)
         {
             if (opciones == "")
@@ -90,6 +92,7 @@ namespace directorio
             }
 
         }
+        //Sirve para volver al menu principal utilizando r
         public void RetornarMenu()
         {
             string opcion;

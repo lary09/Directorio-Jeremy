@@ -4,41 +4,39 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace directorio
 {
     public class validacionCampos_Requeridos
     {
-       public  void  validarNombre (string  ele)
+        public void ValidarNombre(string ele)
         {
-            
 
-            
-            
+            Console.WriteLine("\n");
+            Regex Val = new Regex(@"^[a-zA-Z]+$");
+            while (!Val.IsMatch(ele))
+            {
+                Console.WriteLine("Error! intentelo nuevamente");
+                ele = Console.ReadLine();
+                ValidarNombre(ele);
 
-                Console.WriteLine("\n");
+            }
 
-                foreach (var c in ele)
-                {
-                    while (!char.IsWhiteSpace(c) && !char.IsLetter(c))
-                    {
-                        cambiarNombre(ele);
-
-                    }
-                }
-
-            
         }
-        public void cambiarNombre(string name)
+        public void CambiarNombre(string name)
         {
-            
-            Console.WriteLine("Ingrese nombre nuevamente! ");
+
+            Console.WriteLine("Error! digite el nombre nuevamente");
+            name.Trim();
             name = Console.ReadLine();
+            ValidarNombre(name);
             
-            validarNombre(name);
+            
         }
-       public void changeValidation(bool val)
+       public void ChangeValidation(bool val)
         {
             if(val == true)
             {

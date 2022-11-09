@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace directorio
@@ -15,6 +16,7 @@ namespace directorio
         string Email;
         string direccion;
 
+        //Aqui creamos el usuario
         public void crearUsuario()
         {
             Console.WriteLine("---------Crear usuario--------------");
@@ -24,21 +26,21 @@ namespace directorio
 
             Console.Write("Ingrese su nombre *");
             nombre = Console.ReadLine();
-            while(nombre == "" || nombre == null)
+            //validar si el campo nombre contiene numeros o espacios
+            while (!Regex.IsMatch(nombre, @"^[a-zA-Z]+$"))
             {
-                Console.WriteLine("Este campo es obligatorio intentelo de nuevo \n");
+                
+                Console.WriteLine("El nombre solo debe contener letras");
+                nombre = Console.ReadLine();
 
-                Console.WriteLine("\n");
-                Console.Write("Ingrese su nombre *");
-                nombre = Console.ReadLine() ;
-                Console.WriteLine("\n");
             }
 
             Console.Write("Ingrese su telefono *");
-            
+
+            //validamos que sea solo numeros en caso contrario retorna 0 y vualve al bucle
             long.TryParse(Console.ReadLine(), out telefono);
             
-            while (telefono == null || telefono == 0)
+            while (telefono <= 0)
             {
                 Console.WriteLine("\n");
                 Console.WriteLine("Digite correctamente su numero telefonico! \n");
@@ -60,6 +62,7 @@ namespace directorio
             Console.WriteLine("\n");
 
         }
+        //Validamos is la lista de usuario esta vacia al momento de la consulta 
         public bool validarLista()
         {
             if (listUsuarios.Count == 0)
@@ -71,17 +74,21 @@ namespace directorio
                 return false;
             }
         }
+        //Mostramos el usuario si la lista tiene alquno registrado
         public void mostrarUsuiario()
         {
-            if (validarLista() == true)
+            if (validarLista() )
             {
                 Console.WriteLine("EL directorio esta vacio");
+                Console.WriteLine("\n");
             }
             else
             {
                 Console.WriteLine("Total de usuarios registrados " + listUsuarios.Count);
                 Console.WriteLine("\n");
                 Console.WriteLine("-------Lista de usuarios--------");
+                Console.WriteLine("\n");
+                // Recorremos la lista de usuarios y los mostramos por pantalla en caso de existir alguno
                 foreach (Usuarios el in listUsuarios)
                 {
                     impresionUsuarioPantalla(el);
@@ -89,17 +96,19 @@ namespace directorio
             }
             Console.WriteLine("\n");
         }
+        //metodo para imprimir captar los datos e imprimirlos por pantalla
         public void impresionUsuarioPantalla(Usuarios ele)
         {
 
             Console.Write("ID: {0} | Nombre: {1} | Telefono: {2} | Email: {3} | Direccion: {4} ", ele.ID, ele.Nombre, ele.Telefono, ele.Email, ele.direccion);
             Console.WriteLine("\n");
         }
-
+            //metodo para eliminar el usuario
         public void Eliminar()
         {
+            //con la variable buscar accedemos al nombre del usuario que deseamos eliminar
             string buscar;
-            if (validarLista() == true)
+            if (validarLista() )
             {
                 Console.WriteLine("No hay elementos en la lista para eliminar");
             }
@@ -107,6 +116,7 @@ namespace directorio
             {
                 Console.WriteLine("Ingrese el usuario que desea eliminar");
                 buscar = Console.ReadLine();
+                //Recorremos la lista de usuarios ya creados para eliminarlos
                 foreach (var ele in listUsuarios)
                 {
                     if (buscar == ele.Nombre)
@@ -127,12 +137,14 @@ namespace directorio
             }
 
         }
+        //Metodo para modificar los usuarios
         public void modificar()
         {
             string buscar;
             if (validarLista() == true)
             {
                 Console.WriteLine("No hay elementos en la lista para Modificar");
+                Console.WriteLine("\n");
             }
             else if (validarLista() == false)
             {
@@ -144,38 +156,33 @@ namespace directorio
                 Usuarios usuario = new Usuarios();
                     if (buscar == ele.Nombre)
                     {
+                        //aqui le damos el formato que deseamos para mostrar los usuarios
                         Console.Write("ID: {0} | Nombre: {1} | Telefono: {2} | Email: {3} | Direccion: {4} ", ele.ID, ele.Nombre, ele.Telefono, ele.Email, ele.direccion);
                         Console.WriteLine("\n");
                         Console.WriteLine("------------------------------------------------");
                             
                         Console.Write("Ingrese el nombre que desea modificar: ");
-                        
                         usuario.Nombre = Console.ReadLine();
-                        string usu = usuario.Nombre;
-                        foreach(var c in usu)
+                        //nueva mente validamos si es solo letras
+                       while(!Regex.IsMatch(usuario.Nombre, @"^[a-zA-Z]+$"))
                         {
-                           
-                            
-                            while (!char.IsWhiteSpace(c) && !char.IsLetter(c)) 
-                            {
-                                
-                                
-                                cambiarNombre(usu);
-                                
-                            }
-                            
+                            usuario = new Usuarios();
+                            Console.WriteLine("El nombre solo debe contener letras");
+                            usuario.Nombre = Console.ReadLine();
+                             
                         }
-                        
-                        
-                        
-                        
+                        ele.Nombre = usuario.Nombre;
 
-                        ele.Nombre = usuario.Nombre; 
+
+
+
+
+                        
                         Console.Write("Ingrese el numero telefonico que desea modificar: ");
                         long tel;
                         long.TryParse(Console.ReadLine(), out tel);
                         usuario.Telefono = tel;
-                        while(usuario.Telefono == 0)
+                        while(usuario.Telefono <= 0)
                         {
                             Console.WriteLine("\n");
                             Console.WriteLine("Digite un numero de telefono valido");
@@ -194,7 +201,7 @@ namespace directorio
                         Console.WriteLine("Los datos han sido modificados");
 
                     }
-                    else if(buscar != ele.Nombre)
+                    else 
                     {
                         Console.WriteLine("\n");
                         Console.WriteLine("Usuario no encontrado");
@@ -221,7 +228,7 @@ namespace directorio
                     if (buscar == ele.Nombre)
                     {
                         Console.Write("ID: {0} | Nombre: {1} | Telefono: {2} | Email: {3} | Direccion: {4} ", ele.ID, ele.Nombre, ele.Telefono, ele.Email, ele.direccion);
-                        
+                        Console.WriteLine("\n");
                     }
                     else
                     {
